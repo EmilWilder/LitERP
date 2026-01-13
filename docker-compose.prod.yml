@@ -1,0 +1,70 @@
+version: '3.8'
+
+# Production Docker Compose with PostgreSQL
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: literp-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-literp}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-literp_password}
+      - POSTGRES_DB=${POSTGRES_DB:-literp}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-literp}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - literp-network
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: literp-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-literp}:${POSTGRES_PASSWORD:-literp_password}@db:5432/${POSTGRES_DB:-literp}
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - BACKEND_CORS_ORIGINS=["http://localhost","https://${DOMAIN:-localhost}"]
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - literp-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: literp-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - literp-network
+
+# Volumes for persistent data
+volumes:
+  postgres-data:
+    driver: local
+
+# Network for inter-container communication
+networks:
+  literp-network:
+    driver: bridge

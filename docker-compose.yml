@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: literp-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/literp.db
+      - SECRET_KEY=${SECRET_KEY:-your-super-secret-key-change-in-production-min-32-chars}
+      - BACKEND_CORS_ORIGINS=["http://localhost","http://localhost:3000","http://localhost:5173","http://frontend"]
+    volumes:
+      - backend-data:/app/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - literp-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: literp-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - literp-network
+
+# Volumes for persistent data
+volumes:
+  backend-data:
+    driver: local
+
+# Network for inter-container communication
+networks:
+  literp-network:
+    driver: bridge
