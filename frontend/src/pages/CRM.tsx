@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { NavLink, Routes, Route, useNavigate } from 'react-router-dom';
-import { Plus, Users, Target, HandshakeIcon, Building2, Phone, Mail } from 'lucide-react';
+import { NavLink, Routes, Route } from 'react-router-dom';
+import { Plus, Target, HandshakeIcon, Building2, Phone, Mail } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select, Table } from '../components/ui';
 import { crmApi } from '../services/api';
-import { Client, Lead, Deal } from '../types';
+import type { Client, Lead, Deal } from '../types';
 import { format } from 'date-fns';
 
 const CRMNav: React.FC = () => (

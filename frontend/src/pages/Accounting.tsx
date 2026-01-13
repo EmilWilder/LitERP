@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { NavLink, Routes, Route } from 'react-router-dom';
-import { Plus, FileText, Receipt, DollarSign } from 'lucide-react';
+import { Plus, FileText, Receipt } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select, Table } from '../components/ui';
 import { accountingApi, crmApi, projectsApi } from '../services/api';
-import { Invoice, Expense, Client, Project } from '../types';
+import type { Invoice, Expense, Client, Project } from '../types';
 import { format } from 'date-fns';
 
 const AccountingNav: React.FC = () => (

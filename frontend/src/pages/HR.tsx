@@ -4,7 +4,7 @@ import { NavLink, Routes, Route } from 'react-router-dom';
 import { Plus, Users, Building2, Calendar } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select, Table } from '../components/ui';
 import { hrApi, usersApi } from '../services/api';
-import { Employee, Department } from '../types';
+import type { Employee, Department } from '../types';
 import { format } from 'date-fns';
 
 const HRNav: React.FC = () => (

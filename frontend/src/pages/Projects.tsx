@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Search, MoreVertical, Calendar, Users } from 'lucide-react';
+import { Plus, Search, Calendar, Users } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select } from '../components/ui';
 import { projectsApi, tasksApi } from '../services/api';
-import { Project, Task, TaskStatus } from '../types';
+import type { Project, Task, TaskStatus } from '../types';
 import { useAuthStore } from '../store/authStore';
 import { format } from 'date-fns';
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { NavLink, Routes, Route } from 'react-router-dom';
-import { Plus, Calendar, MapPin, Clock, Users } from 'lucide-react';
+import { Plus, Calendar, MapPin, Clock } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select, Table } from '../components/ui';
 import { productionApi, projectsApi } from '../services/api';
-import { ProductionSchedule, Project } from '../types';
+import type { ProductionSchedule, Project } from '../types';
 import { format } from 'date-fns';
 
 const ProductionNav: React.FC = () => (

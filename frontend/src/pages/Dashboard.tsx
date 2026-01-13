@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { Card, Badge, getStatusBadgeVariant } from '../components/ui';
 import { dashboardApi } from '../services/api';
-import { DashboardStats } from '../types';
+import type { DashboardStats } from '../types';
 
 const StatCard: React.FC<{
   title: string;

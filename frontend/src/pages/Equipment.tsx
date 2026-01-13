@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Camera, Search, Calendar, AlertCircle } from 'lucide-react';
 import { Card, Button, Input, Badge, getStatusBadgeVariant, Modal, Select, Table } from '../components/ui';
 import { equipmentApi } from '../services/api';
-import { Equipment as EquipmentType } from '../types';
+import type { Equipment as EquipmentType } from '../types';
 import { format } from 'date-fns';
 
 const categoryOptions = [

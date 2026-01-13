@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, User, Shield, Mail } from 'lucide-react';
 import { Card, Button, Input, Badge, Modal, Select, Table } from '../components/ui';
 import { usersApi } from '../services/api';
-import { User as UserType } from '../types';
+import type { User as UserType } from '../types';
 
 const roleOptions = [
   { value: 'admin', label: 'Admin' },
