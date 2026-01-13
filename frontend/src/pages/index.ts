@@ -1,0 +1,9 @@
+export { Login } from './Login';
+export { Dashboard } from './Dashboard';
+export { Projects } from './Projects';
+export { CRM } from './CRM';
+export { HR } from './HR';
+export { Accounting } from './Accounting';
+export { Equipment } from './Equipment';
+export { Production } from './Production';
+export { Settings } from './Settings';
