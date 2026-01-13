@@ -1,0 +1,50 @@
+version: '3.8'
+
+# Development Docker Compose with hot reload
+services:
+  # Backend API Service with hot reload
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: literp-backend-dev
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/literp.db
+      - SECRET_KEY=dev-secret-key-not-for-production-min-32
+      - BACKEND_CORS_ORIGINS=["http://localhost","http://localhost:3000","http://localhost:5173"]
+    volumes:
+      - ./backend:/app
+      - backend-data-dev:/app/data
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - literp-network-dev
+
+  # Frontend Service with hot reload
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: literp-frontend-dev
+    restart: unless-stopped
+    environment:
+      - VITE_API_URL=http://localhost:8000/api/v1
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - literp-network-dev
+
+volumes:
+  backend-data-dev:
+    driver: local
+
+networks:
+  literp-network-dev:
+    driver: bridge

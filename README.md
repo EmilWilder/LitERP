@@ -86,12 +86,62 @@ A lightweight, scalable Enterprise Resource Planning (ERP) system specifically d
 
 ## Getting Started
 
-### Prerequisites
+### 🐳 Docker (Recommended)
+
+The easiest way to run LitERP is with Docker:
+
+```bash
+# Clone the repository
+git clone https://github.com/EmilWilder/LitERP.git
+cd LitERP
+
+# Copy environment file
+cp .env.example .env
+
+# Build and start containers
+docker-compose up -d
+
+# Or use make commands
+make build
+make up
+```
+
+Access the application:
+- **Frontend:** http://localhost
+- **Backend API:** http://localhost:8000
+- **API Docs:** http://localhost:8000/api/v1/docs
+
+#### Development with Hot Reload
+
+```bash
+# Start development containers
+docker-compose -f docker-compose.dev.yml up -d
+
+# Or use make
+make dev-up
+```
+
+- **Frontend (dev):** http://localhost:5173
+- **Backend (dev):** http://localhost:8000
+
+#### Useful Docker Commands
+
+```bash
+make help          # Show all available commands
+make logs          # View logs
+make down          # Stop containers
+make clean         # Remove all containers and volumes
+make shell-backend # Access backend shell
+```
+
+### Manual Setup
+
+#### Prerequisites
 - Python 3.11+
 - Node.js 18+
 - npm or yarn
 
-### Backend Setup
+#### Backend Setup
 
 ```bash
 # Navigate to backend
@@ -112,7 +162,7 @@ The API will be available at `http://localhost:8000`
 - API Docs: `http://localhost:8000/api/v1/docs`
 - ReDoc: `http://localhost:8000/api/v1/redoc`
 
-### Frontend Setup
+#### Frontend Setup
 
 ```bash
 # Navigate to frontend
